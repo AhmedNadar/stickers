@@ -1,11 +1,33 @@
-%h1 All Articles
+- if user_signed_in?
+  %p#intro
+    Hello
+    = current_user.name.capitalize
+    %br/
+    %span
+      Share your stickers and art here!
+- else
+  %p#intro
+    What is your mood?
+    %br/
+    %span
+      Share your stickers and art here!
 
-- @articles.each do |article|
-  = link_to image_tag(article.image.url(:small)), article
-  %h2= link_to article.title, article
-  %p= article.comments.count
-  %p
-    = article.get_likes.size
-    Likes
-  %hr/
-=link_to "New Article", new_article_path
+#posts
+  - @articles.each do |article|
+    .post
+      .post_image
+        = link_to image_tag(article.image.url(:small)), article
+      .post_content
+        .title
+          %h2= link_to article.title, article
+        .data.clearfix
+          %p.username
+            Shared By:
+            = article.user.name
+          %p.buttons
+            %span
+              %i.fa.af-comments-o
+              = article.comments.count
+              %i.fa.af-thumbs-up
+              = article.get_likes.size
+  =link_to "New Article", new_article_path

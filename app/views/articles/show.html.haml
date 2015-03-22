@@ -1,32 +1,36 @@
-= image_tag @article.image.url(:medium)
-%h2= @article.title
-%p= @article.content
-%p= @article.link
-%p
-  = @article.get_upvotes.size
-  Likes
-%p
-  = @article.get_downvotes.size
-  Dislikes
+#post_show
+  %h1= @article.title
+  %p.username
+    Share by:
+    = @article.user.name
+    about
+    = time_ago_in_words(@article.created_at)
+  .clearfix
+    .post_image_description
+      = image_tag @article.image.url(:medium)
+      .description= simple_format(@article.content)
+    .post_date
+      = link_to "Visit Link", @article.link, class: "button"
 
+      = link_to like_article_path(@article), method: :get, class: "data" do
+        %i.fa.fa-thumbs-o-up
+        = pluralize(@article.get_upvotes.size, "Like")
 
-=link_to "Link",    like_article_path(@article), method: :get
-=link_to "Dislink", dislike_article_path(@article), method: :get
-%hr/
+      = link_to like_article_path(@article), method: :get, class: "data" do
+        %i.fa.fa-thumbs-o-down
+        = pluralize(@article.get_downvotes.size, "Dislike")
+      %p.data
+        %i.fa.fa-comments-o
+        = pluralize(@article.comments.count, "Comment")
+      - if @article.user == current_user
+        = link_to "Edit", edit_article_path(@article), class: "data"
+        = link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure?" }, class: "data"
 
-#comments
-  %h2= pluralize(@article.comments.count, "Comment")
-  - @comments.each do |comment|
-    %p= comment.body
-    %p= comment.user.name
+    #comments
+      %h2
+      - @comments.each do |comment|
+        %p= comment.body
+        %p= comment.user.name
 
-  %h3 Reply to thread
-  = render "comments/form"
-
-
-%hr/
-= link_to "Edit", edit_article_path(@article)
-|
-= link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure?" }
-|
-= link_to "Home", root_path
+      %h3 Reply to thread
+      = render "comments/form"
