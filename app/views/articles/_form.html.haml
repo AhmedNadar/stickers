@@ -1,4 +1,5 @@
-= simple_form_for @article do |form|
+= simple_form_for @article html: { multipsrt: true } do |form|
+  = form.input :image
   = form.input :title
   = form.input :content, as: :text
   = form.input :link
