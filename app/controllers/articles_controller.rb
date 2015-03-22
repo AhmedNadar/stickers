@@ -7,6 +7,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    @comments = Comment.where(article_id: @article)
   end
 
   def new

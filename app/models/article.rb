@@ -1,12 +1,13 @@
 class Article < ActiveRecord::Base
   # associations
   belongs_to :user
+  has_many :comments
 
   # validation
   validates_presence_of :title, :content, :link
 
   # paperclip
-  has_attached_file :image, styles:{ large: "600x600>", 
+  has_attached_file :image, styles:{ large: "600x600>",
                                     medium: "300x300>",
                                      small: "150x150#" },
    url: "/assets/:class/:id/:style.:extension",
