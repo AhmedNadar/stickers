@@ -1,7 +1,8 @@
 class ArticlesController < ApplicationController
-  before_action :find_article, only: [:show, :edit, :update, :destroy]
+  before_action :find_article, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
+  before_action :find_user, only: [:new, :create, :upvote, :downvote]
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :find_user, only: [:new, :create]
+
   def index
     @articles = Article.all.order("created_at DESC")
   end
@@ -38,6 +39,17 @@ class ArticlesController < ApplicationController
   def destroy
     @article.destroy
     redirect_to root_path
+  end
+
+
+  def upvote
+    @article.upvote_by @user
+    redirect_to :back
+  end
+
+  def downvote
+    @article.downvote_by @user
+    redirect_to :back
   end
 
   private

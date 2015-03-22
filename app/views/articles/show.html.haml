@@ -1,7 +1,17 @@
 = image_tag @article.image.url(:medium)
 %h2= @article.title
-%p=  @article.content
-%p=  @article.link
+%p= @article.content
+%p= @article.link
+%p
+  = @article.get_upvotes.size
+  Likes
+%p
+  = @article.get_downvotes.size
+  Dislikes
+
+
+=link_to "Link",    like_article_path(@article), method: :get
+=link_to "Dislink", dislike_article_path(@article), method: :get
 %hr/
 
 #comments

@@ -4,5 +4,8 @@
   = link_to image_tag(article.image.url(:small)), article
   %h2= link_to article.title, article
   %p= article.comments.count
+  %p
+    = article.get_likes.size
+    Likes
   %hr/
 =link_to "New Article", new_article_path

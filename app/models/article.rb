@@ -1,4 +1,6 @@
 class Article < ActiveRecord::Base
+  acts_as_votable
+
   # associations
   belongs_to :user
   has_many :comments
@@ -12,7 +14,6 @@ class Article < ActiveRecord::Base
                                      small: "150x150#" },
    url: "/assets/:class/:id/:style.:extension",
    path: ":rails_root/public/assets/:class/:id/:style.:extension"
-
 
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates_attachment_presence :image

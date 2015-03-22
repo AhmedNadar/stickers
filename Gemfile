@@ -22,6 +22,7 @@ gem 'font-awesome-sass', '~> 4.3.0'
 gem 'haml-rails'
 gem 'will_paginate', '~> 3.0.6'
 gem 'friendly_id'
+gem 'acts_as_votable', '~> 0.10.0'
 
 group :development do
     gem "interactive_editor"
